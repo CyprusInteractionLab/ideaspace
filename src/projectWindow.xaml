@@ -1,0 +1,110 @@
+﻿<Window x:Class="ideaSpaceApplication.projectWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008"
+    Title="ideaSpace Project" Topmost="False" 
+    WindowState="Maximized" mc:Ignorable="d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="576" d:DesignWidth="979" WindowStyle="None">
+    <Window.Resources>
+        <DataTemplate x:Key="ScatterViewItemDataTemplate" >
+            <Grid>
+            <Border BorderThickness="{Binding Border}" BorderBrush="White" IsManipulationEnabled="True">
+                <Image Source="{Binding Content}" IsManipulationEnabled="True" />
+            </Border>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="CursorStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Opacity" Value="0.50"/>
+            <Setter Property="ContentTemplate" Value="{StaticResource ScatterViewItemDataTemplate}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        <ContentPresenter 
+            Content="{TemplateBinding Content}" 
+            ContentTemplate="{TemplateBinding ContentTemplate}">
+                        </ContentPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Tag" Value="DragEnter">
+                    <Setter Property="Opacity" Value="1.0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="Black" Name="mainGrid"> 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="746*" />
+            <ColumnDefinition Width="220" />
+        </Grid.ColumnDefinitions>
+        <s:ScatterView Background="#FFD49300" x:Name="scatterView" 
+        ItemTemplate="{DynamicResource ScatterViewItemDataTemplate}" 
+        PreviewMouseDown="DragSourcePreviewInputDeviceDown"
+        PreviewTouchDown="DragSourcePreviewInputDeviceDown"
+        s:SurfaceDragDrop.DragCanceled="DragCanceled"
+        s:SurfaceDragDrop.DragCompleted="DragCompleted"
+        s:ScatterViewItem.ContainerActivated="scatterView_ContainerActivated"
+        >
+
+        </s:ScatterView>
+        <Expander Name="noteExpander" ExpandDirection="Down" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,1,0,-1" Background="#FFAD1818" Width="550" HorizontalAlignment="Left" IsManipulationEnabled="True" Expanded="noteExpander_Expanded"
+                  Collapsed="noteExpander_Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="299" Visibility="Hidden">
+            <s:SurfaceTextBox Name="noteTextBox" Text="this is where you add your notes ..." TextChanged="noteTextBox_TextChanged" AcceptsTab="True" AcceptsReturn="True" Background="White" Foreground="Black" Margin="1,5,1,1" HorizontalContentAlignment="Left" LostFocus="noteTextBox_LostFocus" GotFocus="noteTextBox_GotFocus" />
+        </Expander>
+
+        <Label Content="Project: &quot;Group A&quot;" Height="48" HorizontalAlignment="Left" Margin="20,10,0,0" Name="projectTitle" VerticalAlignment="Top" Width="526" FontSize="24" Background="White" Foreground="#FF904141" Grid.ColumnSpan="2" Panel.ZIndex="199" />
+        <s:SurfaceButton Margin="0,10,10,0" Content="Open Notes" Name="openNote" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="22" Click="openNote_Click" Grid.Column="1" />
+        <s:SurfaceButton Margin="0,60,10,0" Content="Add Image" Name="addImageButton" Width="200" FontSize="22" Click="surfaceButton1_Click" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" />
+        <s:SurfaceButton Margin="0,110,10,0" Content="Scan Image" Name="scanImageButton" Width="200" FontSize="22" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Click="scanImageButton_Click" />
+        <s:SurfaceButton Margin="0,160,10,0" Content="Take Snapshot" Name="snapshotButton" Width="200" FontSize="22" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Click="snapshotButton_Click" />
+        <s:SurfaceButton Margin="0,210,10,0" Content="Open Canvas" Name="openCanvas" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="22" Grid.Column="1" Click="openCanvas_Click" />
+        <s:SurfaceButton Margin="0,260,10,0" Content="Generic Audio" Name="genericAudioButton" Width="200" FontSize="22" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Click="genericAudioButton_Click" />
+        <s:SurfaceButton Margin="0,310,10,0" Content="Take Video" Name="takeVideoButton" Width="200" FontSize="22" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Click="takeVideoButton_Click" ToolTip="Video recording is not available" Visibility="Hidden" />
+            <Image Width="100" Source="/ideaSpaceApplication;component/Resources/bin.png" Stretch="Uniform" 
+                   Name="trash" VerticalAlignment="Bottom" AllowDrop="True" Grid.Column="1"
+            s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
+            s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
+            s:SurfaceDragDrop.Drop="OnDropTargetDrop" UseLayoutRounding="True" HorizontalAlignment="Right" Margin="5" />
+        <Grid HorizontalAlignment="Stretch" Margin="50" Name="removeGrid" VerticalAlignment="Stretch" Visibility="Hidden" Background="#FF5A7389" Grid.ColumnSpan="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition MinHeight="500" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Label FontSize="24" Height="100" Foreground="White" Margin="10" Grid.Row="0">
+                Are you sure you want to permanently delete this image from the library?
+            </Label>
+            <Image HorizontalAlignment="Center" Margin="50,50,50,100"  Grid.Row="1"
+                   Name="removeImage" Stretch="Uniform" VerticalAlignment="Top" />
+            <s:SurfaceButton Content="No" Height="23" HorizontalAlignment="Right" Grid.Row="2" Margin="0,0,126,20" Name="noRemoveButton" VerticalAlignment="Bottom" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFB96B6B" Click="noRemoveButton_Click" />
+            <s:SurfaceButton Content="Yes" Height="23" HorizontalAlignment="Left" Grid.Row="2" Margin="119,0,0,20" Name="yesRemoveButton" VerticalAlignment="Bottom" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFB96B6B" Click="yesRemoveButton_Click" />
+        </Grid>
+        <Grid HorizontalAlignment="Stretch" Margin="70" Name="scanGrid" VerticalAlignment="Stretch" Visibility="Hidden" Background="#FF5A7389" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition MinHeight="500" Height="540*" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Grid Visibility="Visible" Name="beforeScanLabel" Margin="10" Height="90">
+                <TextBlock TextWrapping="Wrap" FontSize="24" Foreground="White" HorizontalAlignment="Center">
+                    Please place something on the surface for scanning, click here when ready
+                    </TextBlock>
+                    <s:SurfaceButton Name="scanNowButton" Click="scanNowButton_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="200" Margin="1,33,1,10" HorizontalAlignment="Center" Height="40">Scan Now</s:SurfaceButton>
+            </Grid>
+            <Label Visibility="Hidden" Name="afterScanLabel" FontSize="24"  VerticalAlignment="Top" Foreground="White" Padding="10" Margin="78,10,70,0" Height="90" HorizontalAlignment="Center" Width="709">
+                <TextBlock TextWrapping="Wrap">
+                Please crop the image to include only the desired parts in the scanned image,
+                    Start with clicking on top-left dragging to bottom-right
+                </TextBlock>
+            </Label>
+            <s:SurfaceButton Grid.Row="2" Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,0,38,20" Name="noScanButton" VerticalAlignment="Center" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFB96B6B" Click="noScanButton_Click"  />
+            <s:SurfaceButton Grid.Row="2" Content="Reset Cropping" Height="23" HorizontalAlignment="Center" Margin="50,0,50,20" Name="resetCropButton" VerticalAlignment="Center" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFB96B6B" Click="resetCropButton_Click"  />
+            <s:SurfaceButton Grid.Row="2" Content="Crop and Add" Height="23" HorizontalAlignment="Left" Margin="37,0,0,20" Name="yesCropButton" VerticalAlignment="Center" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFB96B6B" Click="yesCropButton_Click" />
+        </Grid>
+        <s:SurfaceButton x:Name="exitButton" Content="Exit" Grid.Column="1" Margin="10,522,0,5" VerticalAlignment="Bottom" Click="SurfaceButton_Click" RenderTransformOrigin="0.425,0.546" HorizontalAlignment="Left" FontSize="22" FontWeight="Bold"/>
+
+    </Grid>
+</Window>

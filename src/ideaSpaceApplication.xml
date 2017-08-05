@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ss:ApplicationInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ss="http://schemas.microsoft.com/Surface/2007/ApplicationMetadata">
+  <Application>
+    <Title>ideaSpace Application</Title>
+    <Description>ideaSpace Application</Description>
+    <ExecutableFile>ideaSpaceApplication.exe</ExecutableFile>
+  </Application>
+</ss:ApplicationInfo>

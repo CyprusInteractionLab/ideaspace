@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    >
+    <system:String x:Key="ScanImage">Scan image to Library</system:String>
+        <system:String x:Key="2">
+
+            Take snapshot of library
+    Take snapshot of canvas
+    Open Canvas
+    Load Image to Canvas
+    Delete Image from Canvas
+    Load Image from File
+    Delete Image from Library
+    Text Annotation added
+    Sound Annotation added
+    Freehand annotation added
+    Text Annotation deleted
+    Sound Annotation deleted
+    Freehand annotation deleted
+    Record Video started
+    Record Video stopped
+    Record Audio started
+    Record Audio stopped
+    Video Uploaded to Facebook
+    Video Saved locally
+    Video Uploaded to facebook and saved locally
+    Audio Uploaded to Facebook
+    Audio Saved locally
+    Audio Uploaded to facebook and saved locally
+</system:String>
+</ResourceDictionary>
